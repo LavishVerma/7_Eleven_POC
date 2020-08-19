@@ -11,5 +11,7 @@ public interface Login_Register_Repository extends CrudRepository<RegisterEntity
 	
 	@Query("select id from RegisterEntity u where u.phonenumber= ?1 and u.password= ?2")
 	Long findByPhonenumberAndPassword(String phonenumber, String password);
+	
+	RegisterEntity  findByPhonenumber(String phonenumber);
 
 }

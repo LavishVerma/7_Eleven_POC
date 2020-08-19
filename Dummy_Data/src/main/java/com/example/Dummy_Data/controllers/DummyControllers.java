@@ -26,7 +26,7 @@ public class DummyControllers {
 	@ResponseStatus(HttpStatus.OK)
 	public  ResponseEntity<Boolean> GetDummyFunction(@PathVariable("id") Long number)
 	{
-		System.out.println("inside");
+		//System.out.println("inside");
 		Boolean flag=service.sendDummyData(number.intValue());
 		return new ResponseEntity<Boolean>(flag,HttpStatus.OK);
 				
