@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 import com.example.Dummy_Data.model.CRUDentity;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -19,7 +20,9 @@ public class DummyService {
 	@Autowired
 	private WebClient.Builder webClientBuilder;
 	
-	@HystrixCommand(fallbackMethod = "sendDummyDatadefaultAction")
+	@HystrixCommand(fallbackMethod = "sendDummyDatadefaultAction", commandProperties = {
+	@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
+			})
 	public Boolean sendDummyData(int number) 
 	{
 		CRUDentity[] data=GenerateDummyData(number);

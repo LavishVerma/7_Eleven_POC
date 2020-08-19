@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.CRUD.entity.CRUDentity;
 import com.example.CRUD.repository.CRUDrepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 
@@ -97,10 +98,12 @@ public class CRUDservice {
 		return false;
 	}
 
-	@HystrixCommand(fallbackMethod = "defaultAction")
+	@HystrixCommand(fallbackMethod = "defaultAction", commandProperties = {
+			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
+					})
 	public Boolean StoreDummyData(CRUDentity[] data) {
 		List<CRUDentity> list=Arrays.asList(data);
-		System.out.println(2/0); //Custom Exception for Hysterix Circuit Breaker testing.
+		//System.out.println(2/0); //Custom Exception for Hysterix Circuit Breaker testing.
 		System.out.println("Hello"+list);
 		repository.saveAll(list);
 		return true;
