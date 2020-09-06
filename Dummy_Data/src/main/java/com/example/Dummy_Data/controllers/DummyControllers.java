@@ -3,6 +3,7 @@ package com.example.Dummy_Data.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,16 @@ public class DummyControllers {
 	
 	@Autowired
 	DummyService service;
+	
+	@Value("${lavish}")
+	private String defaultAppName;
+	
+	@GetMapping("/ctest")
+	public ResponseEntity<String> acfbs()
+	{
+		System.out.println("qwertyui"+ defaultAppName);
+		return new ResponseEntity<String>(defaultAppName,HttpStatus.OK);
+	}
 	
 	@GetMapping("/dummydata/{id}")
 	@ResponseStatus(HttpStatus.OK)
